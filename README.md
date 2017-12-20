@@ -2,7 +2,9 @@
 
 This is a simple coin gathering game. User taps the screen to make the character jump.
 
-You can test the game at https://www.sahi.gq/game/
+You can test the game at https://www.sahi.gq/game/.
+
+See the [Finnish documentation for more information](Dokumentaatio.pdf).
 
 ## Getting Started
 
@@ -13,10 +15,11 @@ These instructions will get you a copy of the project up and running on your loc
 You need to have an Apache server and MySQL server. You can get both for example via [XAMPP](https://www.apachefriends.org/index.html).  
 You can use the `database.sql` to generate the correct database tables.
 
+You will also need a Facebook Application and its ID. [Click here for more information](https://developers.facebook.com/docs/facebook-login/web).
+
 ### Installing
 
-Just transfer all the files to a live Apache server.
-
+Just transfer all the files to a live Apache server.  
 Remember to modify `db_config.php` and `fb_config.js` with correct information.
 
 ## Built With
