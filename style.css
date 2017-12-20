@@ -1,0 +1,141 @@
+/** CT30A3202 WWW-sovellukset harjoitustyö
+ * Tekijä: Ilari Sahi
+ * Päivämäärä: 20.12.2017
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,900');
+
+.input-row {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+#game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#game-hud {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    font-family: 'Nunito', sans-serif;
+}
+
+.game-score {
+    font-weight: 900;
+    padding-left: 20px;
+}
+
+#game-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 15;
+    font-family: 'Nunito', sans-serif !important;
+    background: rgba(54, 25, 25, .5);
+}
+
+#game-menu .card {
+    margin: auto auto;
+}
+
+.game-menu-buttons {    
+    font-weight: 900;
+    margin: auto auto;
+}
+
+.game-menu-buttons a {
+    display: block;
+    margin: 10px;
+}
+
+#login-register-card {
+    display: none;
+}
+
+.card .card-content {
+    clear: both;
+}
+
+.card .card-action .btn-floating {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.back-button {
+    float: left;
+    font-size: 50px;
+    margin: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#last-score {
+    display: none;
+    margin-right: 0;
+}
+
+#scoreboard-card {
+    display: none;
+}
+
+.menu-row {
+    margin-top: auto;
+    margin-bottom: auto;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Style for printing scoreboard */
+@media print {
+    #game {
+        display: none;
+    }
+
+    #game-menu {
+        background: #fff;
+    }
+
+    .back-button {
+        display: none;
+    }
+
+    .card {
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+
+    .card.blue {
+        background-color: #fff !important;
+    }
+
+    .card-content.white-text {
+        color: #000 !important;
+        font-size: 30px;
+    }
+
+    .card-action {
+        display: none;
+    }
+
+    th:nth-child(4), td:nth-child(4) {
+        display: none;
+    }
+}
