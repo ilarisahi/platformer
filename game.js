@@ -74,6 +74,7 @@ $(() => {
     var coinTypes = [];
     var scoreText;
 
+    // Preload game assets
     function onPreload() {
         game.load.image('background', './assets/bg.png');
         game.load.image('floorCenter', './assets/grassMid.png');
@@ -90,6 +91,7 @@ $(() => {
         coinTypes.push('coinGold');
     }
 
+    // Create game state
     function onCreate() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.input.mouse.capture = true;
@@ -107,6 +109,7 @@ $(() => {
 
         initFloor();
 
+        // Initialise game character
         player = game.add.sprite(game.width * 0.1, 0, 'player');
         game.physics.arcade.enable(player);
         player.body.bounce.y = 0.2;
@@ -125,19 +128,23 @@ $(() => {
         }
     }
 
+    // Update game state
     function onUpdate() {
         game.physics.arcade.collide(player, floors);
         player.body.x = game.width * 0.1;
 
+        // Check if player can jump
         if ((game.input.pointer1.isDown || game.input.activePointer.leftButton.isDown)
             && player.body.touching.down) {
             player.body.velocity.y = -250;
         }
 
+        // Check if player falls of
         if (player.y > game.height) {
             showMenu();
         }
 
+        // Check if player collect's a coin
         game.physics.arcade.overlap(player, coins, collectCoin, null, this);
     }
 
@@ -146,12 +153,15 @@ $(() => {
         score = 0;
         $('.game-score').text('SCORE: ' + score);
         game.state.start('main');
+
+        // Clear timers
         for (let i = 0; i < timers.length; i++) {
             console.log('Clearing timer: ' + i);
             clearTimeout(timers[i]);
         }
     }
 
+    // Return to boot mode
     function showMenu() {
         game.state.start('boot');
         addScore(score);
@@ -181,10 +191,12 @@ $(() => {
             })
     }
 
+    // Reset background
     function onResize() {
         game.add.tileSprite(0,0, game.width, game.height, 'background');
     }
 
+    // Apply full screen mode
     function goFullScreen() {
         game.stage.backgroundColor = '#555555';
         game.scale.pageAlignHorizontally = true;
@@ -192,6 +204,7 @@ $(() => {
         game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
     }
 
+    // Add a new coin to the stage
     function addCoin() {
         let coinType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
         console.log('Adding coin: ' + coinType);
@@ -208,9 +221,11 @@ $(() => {
         coin.outOfBoundsKill = true;
         coins.add(coin);
 
+        // Add coin movement
         let tween = game.add.tween(coin).to({ y: randomNumberBetween(min, max) }, 2000, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
     }
 
+    // Triggered when user hits a coin
     function collectCoin(p, c) {
         let multiplier = coinTypes.indexOf(c.key) + 1;
         score += 5 * multiplier;
@@ -219,6 +234,7 @@ $(() => {
         $('.game-score').text('SCORE: ' + score);
     }
 
+    // Add a new floor
     function addFloor(x, y, position) {
         let floor = game.add.sprite(x, y, position);
         floors.add(floor);
@@ -229,6 +245,7 @@ $(() => {
         return floor;
     }
 
+    // Initialise floor
     function initFloor() {
         var tempFloors = [];
 
@@ -243,9 +260,12 @@ $(() => {
         lastFloor.events.onEnterBounds.add(() => {
             console.log('Inside bounds!');
             let timeOut = randomNumberBetween(800, 1500);
+
+            // Begin generating random platforms
             timers.push(setTimeout(addFloorPlatform, timeOut));
         }, this);
 
+        // Remove floors from memory
         lastFloor.events.onOutOfBounds.add(() => {
             console.log('Out of bounds!');
             outOfBoundsCounter++;
@@ -257,6 +277,7 @@ $(() => {
         }, this);
     }
 
+    // Adds a random platform
     function addFloorPlatform() {
         timers.shift();
         var tempFloors = [];
@@ -278,6 +299,7 @@ $(() => {
             timers.push(setTimeout(addFloorPlatform, timeOut));
         }, this);
 
+        // Remove floors from memory
         lastFloor.events.onOutOfBounds.add(() => {
             console.log('Out of bounds!');
             outOfBoundsCounter++;
@@ -289,6 +311,7 @@ $(() => {
         }, this);
     }
 
+    // Generate random number
     function randomNumberBetween(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
